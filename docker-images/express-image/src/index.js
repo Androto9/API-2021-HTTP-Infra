@@ -1,8 +1,14 @@
 var Chance = require('chance');
-var Express = require('express');
-
 var chance = new Chance();
-var app = new Express();
+
+var express = require('express');
+var app = express();
+
+app.get('/', function(req, res){ res.send("Salut");});
+app.get('/zoo', function(req, res){ res.send("Welcome to the zoo");});
+app.get('/zoo/animals' , function(req, res){ res.send(displayZoo());});
+
+app.listen(3000, function(){ console.log('Accepting HTTP requests on port 3000.');});
 
 function displayZoo(){
 	var nbAnimals = chance.integer({min: 1, max: 10});
@@ -17,9 +23,3 @@ function displayZoo(){
 	console.log(animals);
 	return animals;
 }
-
-app.get('/zoo', function(req, res){ res.send("Welcome to the zoo");});
-
-app.get('/zoo/animals' , function(req, res){ res.send(displayZoo());});
-
-app.listen(3000, function(){ console.log('Accepting HTTP requets on port 3000.');});
