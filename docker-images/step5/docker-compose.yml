@@ -1,0 +1,26 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  web:
+    build: ../apache-php-image/
+    expose: 
+       - "80"
+    labels:
+       - "traefik.http.routers.web.rule=PathPrefix(`/`)"
+       - "traefik.http.services.web-static-service.loadBalancer.sticky.cookie=true"
+       - "traefik.http.services.web-static-service.loadBalancer.sticky.cookie.name=web_static_cookie_name"
+  dynamic:
+    build: ../express-image/
+    expose:
+      - "3000"
+    labels:
+      - "traefik.http.routers.dynamic.rule=PathPrefix(`/zoo/animals`)"
+      - "traefik.http.middlewares.express-dynamic.stripprefix.prefixes=/zoo/animals/"
+      - "traefik.http.routers.dynamic.middlewares=express-dynamic"
+  reverse-proxy:
+    image: traefik:v2.5
+    command: --api.insecure=true --providers.docker --accesslog=true
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock 
