@@ -6,8 +6,8 @@ services:
        - "80"
     labels:
        - "traefik.http.routers.web.rule=PathPrefix(`/`)"
-       - "traefik.http.services.web-static-servic.loadBalancer.sticky.cookie=true"
-       - "traefik.http.services.web-static-servic.loadBalancer.sticky.cookie.name=web_static_cookie_name"
+       - "traefik.http.services.web-static-service.loadBalancer.sticky.cookie=true"
+       - "traefik.http.services.web-static-service.loadBalancer.sticky.cookie.name=web_static_cookie_name"
   dynamic:
     build: ../express-image/
     expose:
