@@ -23,4 +23,15 @@ services:
       - "80:80"
       - "8080:8080"
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock 
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: "portainer"
+    command: -H unix:///var/run/docker.sock
+    restart: always
+    ports:
+      - "8181:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
