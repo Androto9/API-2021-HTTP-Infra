@@ -56,7 +56,7 @@ Dans ce laboratoire, il était conseiller d'utiliser un template pour l'apparanc
 
 ## 2 - Serveur HTTP dynamique avec express.js
 
-### Récupération d'une image docker NodeJS 14.17.0
+### Récupération d'une image docker NodeJS 16.13
 
 Un dockerfile avec une image Node.js officielle provenant de Docker Hub à été crée :
 
@@ -110,8 +110,8 @@ Bonjour  [nom au hasard]
 Il faut maintenant tester l'exécution du script a l'intérieur du container, pour ce faire, il suffit de build et lancer l'image lié au NodeJs :
 
 ```sh
-docker build -t api-express-js-image .
-docker run -p 8080:3000 api-express-js-image
+docker build -t api-express-image .
+docker run -p 8080:3000 api-express-image
 ```
 
 Ici on choisi le port 3000 alors que celui par défaut pour HTTP est 80 pour prouver qu'on est pas obligé de choisir 80 à chaque fois.
@@ -183,7 +183,7 @@ Création de 2 containers : `express-dynamic` et `apache-static`, qui seront les
 
 ```bash
 $ docker run -d --name apache-static api-apache-php-image
-$ docker run -d --name express-dynamic api-express-js-image
+$ docker run -d --name express-dynamic api-express-image
 ```
 
 -`--name` permet de définir par nous même le nom de notre container
@@ -400,7 +400,7 @@ Au début nous avons suivi la vidéo pour la suite de l'implémentation mais lor
 
 Une [image Docker](https://hub.docker.com/_/traefik) officielle est disponible sur Docker Hub, l'image utilisée est la plus récente.
 
-Ici le serveur back-end possède le nom `node_express` et le serveur front-end `apache_php`.
+Ici le serveur back-end possède le nom `express-dynamic` et le serveur front-end `apache-static`.
 
 Il suffit ensuite de créer un `user defined network` et de `run` les 3 serveurs sur ce même network avec l'option `--net [networkName]`.
 
